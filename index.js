@@ -15,15 +15,45 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
 	try {
 		await client.connect();
-		const database = client.db('sample_mflix');
-		const movies = database.collection('movies');
-		// Query for a movie that has the title 'Back to the Future'
-		const query = { title: 'Back to the Future' };
-		const movie = await movies.findOne(query);
-		console.log(movie);
+		const database = client.db('eduSocialDB');
+		const usersCollection = database.collection('users');
+		const statusesCollection = database.collection('statuses');
+
+
+		//==========================================================================
+		// GET API
+		//==========================================================================
+
+		// GET Users
+		app.get('/users', async (req, res) => {
+			const cursor = usersCollection.find({});
+			const users = await cursor.toArray();
+			res.json(users);
+			console.log(users)
+		});
+
+		// GET Statuses
+		app.get('/statuses', async (req, res) => {
+			const cursor = statusesCollection.find({});
+			const statuses = await cursor.toArray();
+			res.json(statuses);
+			console.log(statuses)
+		});
+
+		//==========================================================================
+		// POST API
+		//==========================================================================
+
+		// POST Users Data
+		app.post('/users', async (req, res) => {
+			const newUser = req.body;
+			const result = await usersCollection.insertOne(newUser);
+			res.json(result);
+		});
+
 	} finally {
 		// Ensures that the client will close when you finish/error
-		await client.close();
+		// await client.close();
 	}
 }
 run().catch(console.dir);
