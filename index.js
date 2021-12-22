@@ -51,6 +51,13 @@ async function run() {
 			res.json(result);
 		});
 
+		// POST Status Data
+		app.post('/statuses', async (req, res) => {
+			const newStatus = req.body;
+			const result = await statusesCollection.insertOne(newStatus);
+			res.json(result);
+		})
+
 	} finally {
 		// Ensures that the client will close when you finish/error
 		// await client.close();
