@@ -29,7 +29,7 @@ async function run() {
 			const cursor = usersCollection.find({});
 			const users = await cursor.toArray();
 			res.json(users);
-			console.log(users)
+			// console.log(users)
 		});
 
 		// GET Statuses
@@ -37,7 +37,7 @@ async function run() {
 			const cursor = statusesCollection.find({});
 			const statuses = await cursor.toArray();
 			res.json(statuses);
-			console.log(statuses)
+			// console.log(statuses)
 		});
 
 		//==========================================================================
@@ -57,6 +57,35 @@ async function run() {
 			const result = await statusesCollection.insertOne(newStatus);
 			res.json(result);
 		})
+
+		//==========================================================================
+		// PUT API
+		//==========================================================================
+
+		// PUT API Status Comments
+		app.put('/statuses/comment', async (req, res) => {
+			// const statusComment = req.body;
+			const statusUpdate = req.body;
+
+			const id = statusUpdate._id;
+
+			const statusCollections = statusUpdate.statusCollections;
+
+			const filter = { _id: ObjectId(id) };
+
+			console.log('put: ', statusUpdate);
+			console.log('Filter: ', filter);
+
+			// const options = { upsert: true };
+
+			const updateDoc = { $set: { statusCollections } };
+			
+
+			console.log('updateDoc: ', updateDoc);
+
+			const result = await statusesCollection.updateOne(filter, updateDoc);
+			res.json(result);
+		});
 
 	} finally {
 		// Ensures that the client will close when you finish/error
