@@ -87,6 +87,31 @@ async function run() {
 			res.json(result);
 		});
 
+		// PUT API Love Reacts Calculate
+		app.put('/statuses/love', async (req, res) => {
+			// const statusComment = req.body;
+			const status = req.body;
+
+			const id = status._id;
+
+			const statusCollections = status.statusCollections;
+
+			const filter = { _id: ObjectId(id) };
+
+			console.log('put: ', status);
+			console.log('Filter: ', filter);
+
+			const options = { upsert: true };
+
+			const updateDoc = { $set: { statusCollections } };
+			
+
+			console.log('updateDoc: ', updateDoc);
+
+			const result = await statusesCollection.updateOne(filter, updateDoc, options);
+			res.json(result);
+		});
+
 	} finally {
 		// Ensures that the client will close when you finish/error
 		// await client.close();
