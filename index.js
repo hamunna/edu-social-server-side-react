@@ -112,13 +112,36 @@ async function run() {
 			res.json(result);
 		});
 
-		// PUT API Pending Friend Request
+		// PUT API Pending Friend Request in frReqTo
 		app.put('/users/frReqTo', async (req, res) => {
 			const requestReceiver = req.body;
 
 			const id = requestReceiver._id;
 
 			const activityData = requestReceiver?.activityData;
+
+			const filter = { _id: ObjectId(id) };
+
+			const options = { upsert: true };
+
+			// console.log('put: ', activityData);
+			// console.log('Filter: ', filter);
+
+			const updateDoc = { $set: { activityData } };
+
+			// console.log('updateDoc: ', updateDoc);
+
+			const result = await usersCollection.updateOne(filter, updateDoc, options);
+			res.json(result);
+		});
+
+		// PUT API Pending Friend Request in frReqTo
+		app.put('/users/frReqFrom', async (req, res) => {
+			const requestSender = req.body;
+
+			const id = requestSender._id;
+
+			const activityData = requestSender?.activityData;
 
 			const filter = { _id: ObjectId(id) };
 
