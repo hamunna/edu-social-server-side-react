@@ -73,13 +73,13 @@ async function run() {
 
 			const filter = { _id: ObjectId(id) };
 
-			console.log('put: ', statusUpdate);
-			console.log('Filter: ', filter);
+			// console.log('put: ', statusUpdate);
+			// console.log('Filter: ', filter);
 
 			// const options = { upsert: true };
 
 			const updateDoc = { $set: { statusCollections } };
-			
+
 
 			console.log('updateDoc: ', updateDoc);
 
@@ -98,17 +98,40 @@ async function run() {
 
 			const filter = { _id: ObjectId(id) };
 
-			console.log('put: ', status);
-			console.log('Filter: ', filter);
+			// console.log('put: ', status);
+			// console.log('Filter: ', filter);
 
 			const options = { upsert: true };
 
 			const updateDoc = { $set: { statusCollections } };
-			
+
+
+			// console.log('updateDoc: ', updateDoc);
+
+			const result = await statusesCollection.updateOne(filter, updateDoc, options);
+			res.json(result);
+		});
+
+		// PUT API Pending Friend Request
+		app.put('/users/frReqTo', async (req, res) => {
+			const requestReceiver = req.body;
+
+			const id = requestReceiver._id;
+
+			const activityData = requestReceiver?.activityData;
+
+			const filter = { _id: ObjectId(id) };
+
+			const options = { upsert: true };
+
+			console.log('put: ', activityData);
+			console.log('Filter: ', filter);
+
+			const updateDoc = { $set: { activityData } };
 
 			console.log('updateDoc: ', updateDoc);
 
-			const result = await statusesCollection.updateOne(filter, updateDoc, options);
+			const result = await usersCollection.updateOne(filter, updateDoc, options);
 			res.json(result);
 		});
 
