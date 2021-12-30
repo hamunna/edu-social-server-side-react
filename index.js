@@ -135,20 +135,18 @@ async function run() {
 			res.json(result);
 		});
 
-		// PUT API Pending Friend Request in frReqTo
+		// PUT API Sent Friend Request in frReqTo
 		app.put('/users/frReqFrom', async (req, res) => {
-			const findCurrentUser = req.body;
+			const currentUser = req.body;
+			console.log(currentUser);
 
-			const id = findCurrentUser._id;
+			const id = currentUser._id;
 
-			const activityData = findCurrentUser?.activityData;
+			const activityData = currentUser?.activityData;
 
 			const filter = { _id: ObjectId(id) };
 
 			const options = { upsert: true };
-
-			console.log('put: ', activityData);
-			console.log('Filter: ', filter);
 
 			const updateDoc = { $set: { activityData } };
 
