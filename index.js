@@ -138,9 +138,10 @@ async function run() {
 		// PUT API Sent Friend Request in frReqTo
 		app.put('/users/frReqFrom', async (req, res) => {
 			const currentUser = req.body;
-			console.log(currentUser);
-
+			console.log("Current User: ", currentUser)
+			
 			const id = currentUser._id;
+			console.log("User ID: ", id)
 
 			const activityData = currentUser?.activityData;
 
