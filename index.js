@@ -137,11 +137,11 @@ async function run() {
 
 		// PUT API Pending Friend Request in frReqTo
 		app.put('/users/frReqFrom', async (req, res) => {
-			const requestSender = req.body;
+			const findCurrentUser = req.body;
 
-			const id = requestSender._id;
+			const id = findCurrentUser._id;
 
-			const activityData = requestSender?.activityData;
+			const activityData = findCurrentUser?.activityData;
 
 			const filter = { _id: ObjectId(id) };
 
