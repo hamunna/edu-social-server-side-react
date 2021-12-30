@@ -146,13 +146,13 @@ async function run() {
 
 			const filter = { _id: ObjectId(id) };
 
-			const options = { upsert: true };
+			// const options = { upsert: true };
 
 			const updateDoc = { $set: { activityData } };
 
 			console.log('updateDoc: ', updateDoc);
 
-			const result = await usersCollection.updateOne(filter, updateDoc, options);
+			const result = await usersCollection.updateOne(filter, updateDoc);
 			res.json(result);
 		});
 
